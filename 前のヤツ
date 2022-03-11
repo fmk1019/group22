@@ -1,0 +1,27 @@
+import pandas as pd
+df = pd.read_csv( 'stock_price_SPCom_2021-11-26.csv' ,index_col='Date')
+#日付をINDEX化
+import csv
+#csvファイルをインポート
+df=df.dropna(how='any')
+#欠損値の削除
+#howanyはどれか一つでも欠損していればデータを削除
+
+df=df.pct_change()+1
+#変化率を算出
+df=df.fillna(1)
+#欠損値を穴埋め
+ruiseki=df.cumprod()
+#累積積
+import numpy as np
+
+import itertools
+min_value=np.inf
+for i in itertools.combinations(ruiseki,2):
+    if  np.sum((ruiseki.loc[:,i[0]]-ruiseki.loc[:,i[1]])**2) < min_value:
+        min_value = np.sum((ruiseki.loc[:,i[0]]-ruiseki.loc[:,i[1]])**2)
+        min_name=i
+print(min_name) 
+print('の組み合わせが') 
+print(min_value) 
+print('で一番距離が近い')
