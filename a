@@ -1,0 +1,2 @@
+symbol_M = '^GSPC'
+df_SP500 = pdr.get_date_yahoo(symbol_M, end="2021-11-24")
